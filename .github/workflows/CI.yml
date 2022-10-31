@@ -9,19 +9,22 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  Linux:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
           python-version: "3.8"
-          cache: 'pip' # caching pip dependencies
       - run: python3 -m pip install conan
+      - run: conan install . --build missing -c tools.system.package_manager:mode=install  -c tools.system.package_manager:sudo=true 
 
-      - run: |
-          conan export a/1 a/1@
-          conan export a/2 a/2@
-          conan export b b/1@
-          conan install .
+  Windows:
+    runs-on: windows-2019
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.8"
+      - run: python3 -m pip install conan
+      - run: conan install . --build missing 
