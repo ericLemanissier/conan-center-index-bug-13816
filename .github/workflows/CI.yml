@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.8"
+          cache: 'pip' # caching pip dependencies
+      - run: python3 -m pip install conan
+
+      - run: |
+          conan export a/1 a/1@
+          conan export a/2 a/2@
+          conan export b b/1@
+          conan install .
