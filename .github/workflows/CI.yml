@@ -18,10 +18,9 @@ jobs:
           python-version: "3.8"
       - run: python3 -m pip install conan
       - run: |
-          conan export qt/1 qt/1.0@
-          conan export qt/2 qt/2.0@
+          conan export qt qt/1.0@
           conan export qcustomplot qcustomplot/1.0@
-          conan install . --build missing -c tools.system.package_manager:mode=install  -c tools.system.package_manager:sudo=true 
+          conan install .
 
   Windows:
     runs-on: windows-2019
@@ -32,7 +31,7 @@ jobs:
           python-version: "3.8"
       - run: python3 -m pip install conan
       - run: |
-          conan export qt/1 qt/1.0@
-          conan export qt/2 qt/2.0@
+          conan export qt qt/1.0@
           conan export qcustomplot qcustomplot/1.0@
-          conan install . --build missing
+          conan install .
+
