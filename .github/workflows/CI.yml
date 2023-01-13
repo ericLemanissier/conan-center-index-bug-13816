@@ -35,3 +35,30 @@ jobs:
           conan export qcustomplot qcustomplot/1.0@
           conan install .
 
+  Linux-preversion:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.8"
+      - run: python3 -m pip install conan --pre
+      - run: |
+          conan profile detect
+          conan export qt --name qt --version 1.0
+          conan export qcustomplot --name qcustomplot --version 1.0
+          conan install . -b missing
+
+  Windows-preversion:
+    runs-on: windows-2019
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.8"
+      - run: python3 -m pip install conan --pre
+      - run: |
+          conan profile detect
+          conan export qt --name qt --version 1.0
+          conan export qcustomplot --name qcustomplot --version 1.0
+          conan install . -b missing
